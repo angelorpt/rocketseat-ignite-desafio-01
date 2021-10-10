@@ -1,28 +1,13 @@
 const express = require("express");
 const router = express.Router();
+const todoController = require("../controllers/todo.controller");
+const { checksExistsUserAccount } = todoController;
 
-function checksExistsUserAccount(req, res, next) {
-  next();
-}
-
-router.get("/", checksExistsUserAccount, (req, res) => {
-  res.json({ todos: true });
-});
-
-router.post("/", checksExistsUserAccount, (req, res) => {
-  // Complete aqui
-});
-
-router.put("/:id", checksExistsUserAccount, (req, res) => {
-  // Complete aqui
-});
-
-router.patch("/:id/done", checksExistsUserAccount, (req, res) => {
-  // Complete aqui
-});
-
-router.delete("/:id", checksExistsUserAccount, (req, res) => {
-  // Complete aqui
-});
+router.get("/", checksExistsUserAccount, todoController.index);
+router.get("/:id", checksExistsUserAccount, todoController.show);
+router.post("/", checksExistsUserAccount, todoController.store);
+router.put("/:id", checksExistsUserAccount, todoController.put);
+router.patch("/:id/done", checksExistsUserAccount, todoController.patch);
+router.delete("/:id", checksExistsUserAccount, todoController.destroy);
 
 module.exports = router;
