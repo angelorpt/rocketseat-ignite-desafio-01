@@ -1,0 +1,18 @@
+version: "3.8"
+
+networks:
+  rede:
+    driver: bridge
+
+services:
+  node:
+    build:
+      context: .
+      target: DEV
+    container_name: rocketseat-node-desafio-01
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+    networks:
+      - rede
