@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const routes = require("./routes");
 
 // const { v4: uuidv4 } = require('uuid');
 
@@ -10,36 +11,6 @@ app.use(express.json());
 
 // const users = [];
 
-function checksExistsUserAccount(request, response, next) {
-  // Complete aqui
-}
-
-app.get("/", (req, res) => {
-  return res.json({ hello: "world" });
-});
-
-app.post("/users", (request, response) => {
-  // Complete aqui
-});
-
-app.get("/todos", checksExistsUserAccount, (request, response) => {
-  // Complete aqui
-});
-
-app.post("/todos", checksExistsUserAccount, (request, response) => {
-  // Complete aqui
-});
-
-app.put("/todos/:id", checksExistsUserAccount, (request, response) => {
-  // Complete aqui
-});
-
-app.patch("/todos/:id/done", checksExistsUserAccount, (request, response) => {
-  // Complete aqui
-});
-
-app.delete("/todos/:id", checksExistsUserAccount, (request, response) => {
-  // Complete aqui
-});
+routes(app);
 
 module.exports = app;
