@@ -1,3 +1,4 @@
-const app = require('./');
+require("dotenv").config();
+const app = require("./");
 
-app.listen(3333);
+app.listen(process.env.API_PORT);
