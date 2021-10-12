@@ -1,10 +1,11 @@
-import { Router } from "express";
-import userController from "../controllers/user.controller.js";
+const { Router } = require("express");
+const userController = require("../controllers/user.controller");
+const { validateUserExists } = userController;
 
 const router = Router();
 
 router.get("/", userController.index);
 router.get("/:id", userController.findById);
-router.post("/", userController.store);
+router.post("/", validateUserExists, userController.store);
 
-export default router;
+module.exports = router;

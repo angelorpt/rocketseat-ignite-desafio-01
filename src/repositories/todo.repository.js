@@ -1,1 +1,1 @@
-import db from "../database/config.js";
+const db = require("../database/config");

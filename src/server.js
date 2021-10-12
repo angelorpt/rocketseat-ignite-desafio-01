@@ -1,5 +1,5 @@
-import doenv from "dotenv";
-import app from "./index.js";
+const doenv = require("dotenv");
+const app = require("./index");
 
 doenv.config();
 

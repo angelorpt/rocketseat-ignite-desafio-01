@@ -1,22 +1,22 @@
-import db from "../database/config.js";
+const db = require("../database/config");
 
-const getAll = async () => {
-  await db.read();
-  const users = db.data.users;
+const getAll = () => {
+  const users = db.users;
   return users;
 };
 
-const findById = async (id) => {
-  await db.read();
-  const user = db.data.users.find((user) => user.id === id);
-  console.log("user", user);
+const findById = (id) => {
+  const user = db.users.find((user) => user.id === id);
   return user;
 };
 
-const store = async (user) => {
-  await db.read();
-  db.data.users.push(user);
-  await db.write();
+const userNameExists = (username) => {
+  const user = db.users.some((user) => user.username === username);
+  return user;
 };
 
-export default { getAll, findById, store };
+const store = (user) => {
+  db.users.push(user);
+};
+
+module.exports = { getAll, findById, userNameExists, store };

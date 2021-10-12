@@ -1,5 +1,5 @@
-import { Router } from "express";
-import todoController from "../controllers/todo.controller.js";
+const { Router } = require("express");
+const todoController = require("../controllers/todo.controller");
 
 const router = Router();
 const { checksExistsUserAccount } = todoController;
@@ -11,4 +11,4 @@ router.put("/:id", checksExistsUserAccount, todoController.put);
 router.patch("/:id/done", checksExistsUserAccount, todoController.patch);
 router.delete("/:id", checksExistsUserAccount, todoController.destroy);
 
-export default router;
+module.exports = router;

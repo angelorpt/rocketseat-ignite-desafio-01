@@ -26,7 +26,7 @@ const destroy = (req, res, next) => {
   res.json({ todos: true });
 };
 
-export default {
+module.exports = {
   checksExistsUserAccount,
   index,
   show,

@@ -1,6 +1,6 @@
-import express from "express";
-import cors from "cors";
-import routes from "./routes/index.js";
+const express = require("express");
+const cors = require("cors");
+const routes = require("./routes/index");
 
 // const { v4: uuidv4 } = require('uuid');
 
@@ -11,4 +11,4 @@ app.use(express.json());
 
 routes(app);
 
-export default app;
+module.exports = app;
