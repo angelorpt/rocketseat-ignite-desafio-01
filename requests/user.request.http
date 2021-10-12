@@ -1,0 +1,16 @@
+@baseUrl = http://localhost:3000
+
+GET {{baseUrl}}
+
+### 
+
+GET {{baseUrl}}/users
+
+### 
+
+POST {{baseUrl}}/users
+
+{ 
+	"name": "Danilo Vieira",
+	"username": "danilo" 
+}

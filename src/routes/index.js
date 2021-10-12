@@ -1,5 +1,5 @@
-const UserRoutes = require("./user.routes");
-const TodosRoutes = require("./todos.routes");
+import UserRoutes from "./user.routes.js";
+import TodosRoutes from "./todos.routes.js";
 
 const routes = (app) => {
   app.get("/", (req, res) => {
@@ -10,4 +10,4 @@ const routes = (app) => {
   app.use("/todos", TodosRoutes);
 };
 
-module.exports = routes;
+export default routes;

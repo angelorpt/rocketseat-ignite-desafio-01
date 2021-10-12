@@ -1,6 +1,6 @@
-const express = require("express");
-const cors = require("cors");
-const routes = require("./routes");
+import express from "express";
+import cors from "cors";
+import routes from "./routes/index.js";
 
 // const { v4: uuidv4 } = require('uuid');
 
@@ -9,8 +9,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// const users = [];
-
 routes(app);
 
-module.exports = app;
+export default app;
