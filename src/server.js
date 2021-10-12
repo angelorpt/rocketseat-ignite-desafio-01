@@ -3,4 +3,4 @@ import app from "./index.js";
 
 doenv.config();
 
-app.listen(process.env.API_PORT);
+app.listen(process.env.API_PORT, () => console.log("API Running..."));

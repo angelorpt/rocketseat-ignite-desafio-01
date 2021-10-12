@@ -1,8 +1,15 @@
 import db from "../database/config.js";
 
-const getUser = async (id) => {
+const getAll = async () => {
   await db.read();
-  const user = db.users.find((user) => (user.id = id));
+  const users = db.data.users;
+  return users;
+};
+
+const findById = async (id) => {
+  await db.read();
+  const user = db.data.users.find((user) => user.id === id);
+  console.log("user", user);
   return user;
 };
 
@@ -10,8 +17,6 @@ const store = async (user) => {
   await db.read();
   db.data.users.push(user);
   await db.write();
-
-  return getUser(user.id);
 };
 
-export default { store };
+export default { getAll, findById, store };

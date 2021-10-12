@@ -8,7 +8,12 @@ GET {{baseUrl}}/users
 
 ### 
 
+GET {{baseUrl}}/users/60d93b84-d8f4-4b80-b5c9-3ad07b1679dc
+
+###
+
 POST {{baseUrl}}/users
+Content-Type: application/json
 
 { 
 	"name": "Danilo Vieira",

@@ -9,4 +9,10 @@ const file = join(__dirname, "db.json");
 const adapter = new JSONFile(file);
 const db = new Low(adapter);
 
+(async () => {
+  await db.read();
+  db.data = db.data !== null ? db.data : { users: [], todos: [] };
+  await db.write();
+})();
+
 export default db;
