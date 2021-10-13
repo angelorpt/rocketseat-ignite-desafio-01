@@ -10,6 +10,11 @@ const findById = (id) => {
   return user;
 };
 
+const findByUserName = (username) => {
+  const user = db.users.find((user) => user.username === username);
+  return user;
+};
+
 const userNameExists = (username) => {
   const user = db.users.some((user) => user.username === username);
   return user;
@@ -19,4 +24,4 @@ const store = (user) => {
   db.users.push(user);
 };
 
-module.exports = { getAll, findById, userNameExists, store };
+module.exports = { getAll, findById, findByUserName, userNameExists, store };

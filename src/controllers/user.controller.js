@@ -1,7 +1,7 @@
 const userRepository = require("../repositories/user.repository");
 const { v4: uuidv4 } = require("uuid");
 
-const validateUserExists = (req, res, next) => {
+const checksExistsUserAccount = (req, res, next) => {
   const { username } = req.body;
   const userNameExists = userRepository.userNameExists(username);
   if (userNameExists) {
@@ -39,4 +39,4 @@ const store = (req, res) => {
   return res.status(201).json(user);
 };
 
-module.exports = { validateUserExists, index, findById, store };
+module.exports = { checksExistsUserAccount, index, findById, store };
