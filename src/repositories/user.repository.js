@@ -16,12 +16,12 @@ const findByUserName = (username) => {
 };
 
 const userNameExists = (username) => {
-  const user = db.users.some((user) => user.username === username);
-  return user;
+  const exists = db.users.some((user) => user.username === username);
+  return exists;
 };
 
-const store = (user) => {
+const save = (user) => {
   db.users.push(user);
 };
 
-module.exports = { getAll, findById, findByUserName, userNameExists, store };
+module.exports = { getAll, findById, findByUserName, userNameExists, save };

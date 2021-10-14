@@ -1,41 +1,49 @@
-const todoRepository = require("./todo.repository");
 const userRepository = require("./user.repository");
 
 const getAll = (username) => {
   const user = userRepository.findByUserName(username);
-  const todos = user.todos;
-  return todos;
+  return user.todos;
 };
 
 const findById = (username, todo_id) => {
-  const todos = todoRepository.getAll(username);
-  const todo = todos.find((todo) => (todo.id = todo_id));
+  const todos = getAll(username);
+  const todo = todos.find((todo) => todo.id === todo_id);
   return todo;
 };
 
 const save = (username, todoData) => {
-  const todos = todoRepository.getAll(username);
+  const todos = getAll(username);
   todos.push(todoData);
-  const todo = todoRepository.findById(username, todo.id);
+  const todo = findById(username, todoData.id);
   return todo;
 };
 
 const update = (username, todoData) => {
-  let todo = todoRepository.findById(username, todoData.id);
-  todo = todoData;
-  todo = todoRepository.findById(username, id);
+  let todo = findById(username, todoData.id);
+  let todos = getAll(username);
+  let todosNew = todos.map((todo) => {
+    if (todo.id === todoData.id) {
+      return {
+        ...todoData,
+      };
+    }
+    return todo;
+  });
+  let user = userRepository.findByUserName(username);
+  user.todos = [...todosNew];
+  todo = findById(username, todoData.id);
   return todo;
 };
 
 const patch = (username, todoData) => {
-  let todo = todoRepository.findById(username, todoData.id);
+  let todo = findById(username, todoData.id);
   todo = { ...todo, ...todoData };
-  todo = todoRepository.findById(username, todoData.id);
+  todo = findById(username, todoData.id);
   return todo;
 };
 
 const destroy = (username, id) => {
-  const todos = todoRepository.getAll(username);
+  const todos = getAll(username);
   const newTodos = [];
 
   todos.forEach((todo) => {
@@ -45,11 +53,10 @@ const destroy = (username, id) => {
   });
 
   const user = userRepository.findByUserName(username);
-  user.todos = { ...newTodos };
+  user.todos = [...newTodos];
 
-  const todo = todoRepository.findById(username, id);
-
-  return todo;
+  const todo = findById(username, id);
+  return todo === undefined;
 };
 
 module.exports = {

@@ -1,6 +1,16 @@
 const todoRepository = require("../repositories/todo.repository");
 const { v4: uuidv4 } = require("uuid");
 
+const checksExistsToDo = (req, res, next) => {
+  const { username } = req.headers;
+  const { id } = req.params;
+  const todo = todoRepository.findById(username, id);
+  if (!todo) {
+    return res.status(404).json({ error: "ToDo não encontrado" });
+  }
+  next();
+};
+
 const index = (req, res, next) => {
   const { username } = req.headers;
   const todos = todoRepository.getAll(username);
@@ -10,11 +20,11 @@ const index = (req, res, next) => {
 const show = (req, res, next) => {
   const { username } = req.headers;
   const { id } = req.params;
-  const todo = todoRepository.getAll(username, id);
+  const todo = todoRepository.findById(username, id);
   return res.status(200).json(todo);
 };
 
-const store = (req, res, next) => {
+const save = (req, res, next) => {
   const { username } = req.headers;
   const { title, deadline } = req.body;
 
@@ -27,20 +37,19 @@ const store = (req, res, next) => {
   };
 
   const todo = todoRepository.save(username, todoNew);
-  return res.status(200).json(todo);
+  return res.status(201).json(todo);
 };
 
 const put = (req, res, next) => {
   const { username } = req.headers;
   const { id } = req.params;
-  const { title, deadline, done } = req.body;
+  const { title, deadline } = req.body;
 
   let todo = todoRepository.findById(username, id);
 
   const todoNew = {
     ...todo,
     title: title,
-    done: done,
     deadline: new Date(deadline),
   };
 
@@ -52,13 +61,12 @@ const put = (req, res, next) => {
 const patch = (req, res, next) => {
   const { username } = req.headers;
   const { id } = req.params;
-  const { done } = req.body;
 
   let todo = todoRepository.findById(username, id);
 
   const todoNew = {
     ...todo,
-    done: done,
+    done: true,
   };
 
   todo = todoRepository.update(username, todoNew);
@@ -71,25 +79,19 @@ const destroy = (req, res, next) => {
   const { id } = req.params;
 
   const todo = todoRepository.destroy(username, id);
+  if (!todo) {
+    return res.status(422).json({ error: "Falha ao tentar deletar a tarefa" });
+  }
 
-  return res.status(200).json(todo);
-};
-
-const invalidTodoId = (req, res, next) => {
-  const { username } = req.headers;
-  const { id } = req.params;
-
-  const todo = todoRepository.destroy(username, id);
-
-  return res.status(204);
+  return res.status(204).json({ message: "Tarefa deletada com sucesso" });
 };
 
 module.exports = {
   index,
   show,
-  store,
+  save,
   put,
   patch,
   destroy,
-  invalidTodoId,
+  checksExistsToDo,
 };

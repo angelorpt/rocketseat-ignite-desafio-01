@@ -4,16 +4,18 @@ const todoController = require("../controllers/todo.controller");
 
 const router = Router();
 const { checksExistsUserAccount } = userController;
+const { checksExistsToDo } = todoController;
 
-router.get("/", checksExistsUserAccount, todoController.index);
-router.get("/:id", checksExistsUserAccount, todoController.show);
-router.post("/", checksExistsUserAccount, todoController.store);
-router.put("/:id", checksExistsUserAccount, todoController.put);
-router.patch("/:id/done", checksExistsUserAccount, todoController.patch);
-router.delete("/:id", checksExistsUserAccount, todoController.destroy);
+router.use(checksExistsUserAccount);
+router.get("/", todoController.index);
+router.get("/:id", checksExistsToDo, todoController.show);
+router.post("/", todoController.save);
+router.put("/:id", checksExistsToDo, todoController.put);
+router.patch("/:id/done", checksExistsToDo, todoController.patch);
+router.delete("/:id", checksExistsToDo, todoController.destroy);
 // router.delete(
 //   "/invalid-todo-id",
-//   checksExistsUserAccount,
+//
 //   todoController.destroy
 // );
 

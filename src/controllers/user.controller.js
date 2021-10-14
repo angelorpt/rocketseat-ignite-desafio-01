@@ -2,10 +2,22 @@ const userRepository = require("../repositories/user.repository");
 const { v4: uuidv4 } = require("uuid");
 
 const checksExistsUserAccount = (req, res, next) => {
-  const { username } = req.body;
+  const { username } = req.headers;
   const userNameExists = userRepository.userNameExists(username);
+  if (!userNameExists) {
+    return res.status(404).send({ error: "Usuário não encontrado" });
+  } else {
+    next();
+  }
+};
+
+const checkAlreadyUsedUsername = (req, res, next) => {
+  const { username } = req.body;
+  const userNameExists = userRepository.findByUserName(username);
   if (userNameExists) {
-    return res.status(400).send({ error: "Este username já possui cadastro" });
+    return res
+      .status(400)
+      .send({ error: "Este username já está sendo utilizado" });
   } else {
     next();
   }
@@ -25,7 +37,7 @@ const findById = (req, res) => {
   return res.status(200).json(user);
 };
 
-const store = (req, res) => {
+const save = (req, res) => {
   const { name, username } = req.body;
   const userData = {
     id: uuidv4(),
@@ -33,10 +45,16 @@ const store = (req, res) => {
     username,
     todos: [],
   };
-  userRepository.store(userData);
+  userRepository.save(userData);
   const user = userRepository.findById(userData.id);
 
   return res.status(201).json(user);
 };
 
-module.exports = { checksExistsUserAccount, index, findById, store };
+module.exports = {
+  checksExistsUserAccount,
+  checkAlreadyUsedUsername,
+  index,
+  findById,
+  save,
+};

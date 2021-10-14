@@ -8,7 +8,7 @@ GET {{baseUrl}}/users
 
 ### 
 
-GET {{baseUrl}}/users/60d93b84-d8f4-4b80-b5c9-3ad07b1679dc
+GET {{baseUrl}}/users/25c2d981-71aa-4239-bde1-9b81ac139460
 
 ###
 
@@ -16,6 +16,6 @@ POST {{baseUrl}}/users
 Content-Type: application/json
 
 { 
-	"name": "Danilo Vieira",
-	"username": "danilo" 
+	"name": "Smith",
+	"username": "smith" 
 }

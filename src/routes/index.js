@@ -2,7 +2,7 @@ const UserRoutes = require("./user.routes");
 const TodosRoutes = require("./todos.routes");
 
 const routes = (app) => {
-  app.get("/", (req, res) => {
+  app.get("/", (_, res) => {
     return res.json({ hello: "world" });
   });
 
